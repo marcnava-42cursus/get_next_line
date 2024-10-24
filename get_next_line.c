@@ -6,7 +6,7 @@
 /*   By: marcnava <marcnava@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:48:08 by marcnava          #+#    #+#             */
-/*   Updated: 2024/10/23 22:44:28 by marcnava         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:38:25 by marcnava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_get_eol(char *buffer)
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
-	if (buffer[i] == 0 || buffer[1] == 0)
+	if (buffer[i] == 0 || buffer[i + 1] == 0)
 		return (NULL);
 	pending_line = ft_substr(buffer, i + 1, ft_strlen(buffer) - 1);
 	if (pending_line == 0)
