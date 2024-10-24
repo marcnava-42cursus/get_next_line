@@ -1,0 +1,1 @@
+Fix read in condition -> Read with a size different than BUFFER_SIZE
