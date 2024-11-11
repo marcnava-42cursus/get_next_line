@@ -6,7 +6,7 @@
 /*   By: marcnava <marcnava@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:48:25 by marcnava          #+#    #+#             */
-/*   Updated: 2024/10/24 17:38:28 by marcnava         ###   ########.fr       */
+/*   Updated: 2024/11/01 01:54:30 by marcnava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *s);
 
 // gnl functions
+void	ft_check_free(void **ptr);
 char	*get_next_line(int fd);
 
 #endif

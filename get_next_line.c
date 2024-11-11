@@ -6,11 +6,20 @@
 /*   By: marcnava <marcnava@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:48:08 by marcnava          #+#    #+#             */
-/*   Updated: 2024/10/24 17:38:25 by marcnava         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:49:12 by marcnava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_check_free(void **ptr)
+{
+	if (ptr != NULL && *ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
 
 static char	*ft_get_line_buffer(int fd, char *pending_line, char *buffer)
 {
@@ -18,13 +27,14 @@ static char	*ft_get_line_buffer(int fd, char *pending_line, char *buffer)
 	char	*tmp;
 
 	bytes_read = 1;
+	tmp = NULL;
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
-			free(pending_line);
-			return (NULL);
+			ft_check_free((void **)&pending_line);
+			return (pending_line);
 		}
 		else if (bytes_read == 0)
 			break ;
@@ -33,7 +43,7 @@ static char	*ft_get_line_buffer(int fd, char *pending_line, char *buffer)
 			pending_line = ft_strdup("");
 		tmp = pending_line;
 		pending_line = ft_strjoin(tmp, buffer);
-		free(tmp);
+		ft_check_free((void **)&tmp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -51,8 +61,8 @@ static char	*ft_get_eol(char *buffer)
 	if (buffer[i] == 0 || buffer[i + 1] == 0)
 		return (NULL);
 	pending_line = ft_substr(buffer, i + 1, ft_strlen(buffer) - 1);
-	if (pending_line == 0)
-		free(pending_line);
+	if (!pending_line)
+		ft_check_free((void **)&pending_line);
 	buffer[i + 1] = 0;
 	return (pending_line);
 }
@@ -63,18 +73,15 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		free(pending_line);
-		pending_line = NULL;
-		return (NULL);
-	}
+	line = NULL;
+	buffer = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		ft_check_free((void **)&pending_line);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	line = ft_get_line_buffer(fd, pending_line, buffer);
-	free(buffer);
-	buffer = NULL;
+	ft_check_free((void **)&buffer);
 	if (!line)
 		return (NULL);
 	pending_line = ft_get_eol(line);
