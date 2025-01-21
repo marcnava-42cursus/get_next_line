@@ -6,7 +6,7 @@
 /*   By: marcnava <marcnava@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:48:08 by marcnava          #+#    #+#             */
-/*   Updated: 2024/11/11 17:27:36 by marcnava         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:19:42 by marcnava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*ft_get_eol(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*pending_line;
+	static char	*pending_line[MAX_FD];
 	char		*line;
 	char		*buffer;
 
@@ -77,16 +77,16 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		ft_check_free((void **)&pending_line);
+		ft_check_free((void **)&pending_line[fd]);
 		return (NULL);
 	}
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	line = ft_get_line_buffer(fd, pending_line, buffer);
+	line = ft_get_line_buffer(fd, pending_line[fd], buffer);
 	ft_check_free((void **)&buffer);
 	if (!line)
 		return (NULL);
-	pending_line = ft_get_eol(line);
+	pending_line[fd] = ft_get_eol(line);
 	return (line);
 }

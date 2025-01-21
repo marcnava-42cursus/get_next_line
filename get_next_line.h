@@ -6,7 +6,7 @@
 /*   By: marcnava <marcnava@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:48:25 by marcnava          #+#    #+#             */
-/*   Updated: 2024/11/11 17:25:11 by marcnava         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:19:55 by marcnava         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
+# define MAX_FD 1024
 
 # include <stdlib.h>
 # include <unistd.h>
